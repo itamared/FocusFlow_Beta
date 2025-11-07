@@ -1,48 +1,37 @@
 package com.example.focusflow_beta;
 
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BreakStatsActivity extends BaseActivity {
+public class BreakStatsFragment extends Fragment {
 
     private BarChart barChart;
-    private Button btnBackBreakStats;
-    private BottomNavigationView bottomNavigationView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_break_stats);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        // הטעינת Layout
+        View view = inflater.inflate(R.layout.fragment_break_stats, container, false);
 
-        barChart = findViewById(R.id.barChart);
-        btnBackBreakStats = findViewById(R.id.btnBackBreakStats);
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        barChart = view.findViewById(R.id.barChart);
 
         loadRandomChartData();
 
-        // כפתור חזור
-        btnBackBreakStats.setOnClickListener(v -> finish());
-
-        // NavBar אחיד
-        setupBottomNavigation(bottomNavigationView, R.id.nav_stats);
+        return view;
     }
 
     private void loadRandomChartData() {

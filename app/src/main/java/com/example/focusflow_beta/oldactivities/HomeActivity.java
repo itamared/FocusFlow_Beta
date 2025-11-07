@@ -1,4 +1,4 @@
-package com.example.focusflow_beta;
+package com.example.focusflow_beta.oldactivities;
 
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
@@ -6,6 +6,8 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.focusflow_beta.BaseActivity;
+import com.example.focusflow_beta.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends BaseActivity {
@@ -19,7 +21,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home_old);
 
         tvStatus = findViewById(R.id.tvStatus);
         tvTimer = findViewById(R.id.tvTimer);

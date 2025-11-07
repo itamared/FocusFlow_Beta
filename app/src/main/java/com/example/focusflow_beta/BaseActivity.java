@@ -5,6 +5,9 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.focusflow_beta.oldactivities.BreakStatsActivity;
+import com.example.focusflow_beta.oldactivities.HomeActivity;
+import com.example.focusflow_beta.oldactivities.ProfileActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

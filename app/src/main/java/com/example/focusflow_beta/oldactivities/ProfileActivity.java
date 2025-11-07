@@ -1,4 +1,4 @@
-package com.example.focusflow_beta;
+package com.example.focusflow_beta.oldactivities;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.focusflow_beta.BaseActivity;
+import com.example.focusflow_beta.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileActivity extends BaseActivity {
@@ -17,7 +19,7 @@ public class ProfileActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_old);
 
         // Toolbar עם חץ חזרה
         Toolbar toolbar = findViewById(R.id.toolbar);
