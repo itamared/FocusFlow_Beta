@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -37,6 +38,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.material)
+
+
+    implementation(platform("com.google.firebase:firebase-bom:32.1.0")) // בדוק גרסה עדכנית
+    implementation("com.google.firebase:firebase-auth")    // Authentication
+    implementation("com.google.firebase:firebase-firestore") // Firestore DB
 
     // 📊 ספרייה לגרפים
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")

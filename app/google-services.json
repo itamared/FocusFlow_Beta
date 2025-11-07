@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "123031427083",
+    "project_id": "focusflowbeta",
+    "storage_bucket": "focusflowbeta.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123031427083:android:decd4cc7a180327f608f0e",
+        "android_client_info": {
+          "package_name": "com.example.focusflow_beta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd046WUQcoTG7nvpvZKvpeCrFJUbGFb7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

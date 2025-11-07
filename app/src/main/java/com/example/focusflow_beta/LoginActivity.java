@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -14,11 +15,14 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvMessage, tvRegister;
     private CheckBox cbRememberMe;
     private SharedPreferences prefs;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -29,46 +33,44 @@ public class LoginActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE);
 
-        // בדיקה אם המשתמש כבר שמור
-        if (prefs.getBoolean("rememberMe", false)) {
+        // בדיקה אם המשתמש כבר מחובר
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
             return;
         }
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = etEmail.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
+        btnLogin.setOnClickListener(v -> {
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
-                if (email.isEmpty() || password.isEmpty()) {
-                    tvMessage.setText("אנא מלא את כל השדות!");
-                    tvMessage.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                } else if (email.equals("1") && password.equals("1")) {
-                    tvMessage.setText("התחברת בהצלחה!");
-                    tvMessage.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            if (email.isEmpty() || password.isEmpty()) {
+                tvMessage.setText("אנא מלא את כל השדות!");
+                tvMessage.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            } else {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                tvMessage.setText("התחברת בהצלחה!");
+                                tvMessage.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
 
-                    if (cbRememberMe.isChecked()) {
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putBoolean("rememberMe", true);
-                        editor.apply();
-                    }
+                                if (cbRememberMe.isChecked()) {
+                                    prefs.edit().putBoolean("rememberMe", true).apply();
+                                }
 
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    tvMessage.setText("אימייל או סיסמה שגויים.");
-                    tvMessage.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                }
+                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                finish();
+                            } else {
+                                tvMessage.setText("שגיאה: " + task.getException().getMessage());
+                                tvMessage.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                            }
+                        });
             }
         });
 
-        // מעבר לעמוד הרשמה
         tvRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
     }
 }
