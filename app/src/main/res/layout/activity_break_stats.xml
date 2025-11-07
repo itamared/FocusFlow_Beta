@@ -1,35 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    tools:context=".BreakStatsActivity">
+    android:padding="24dp">
 
-    <!-- Toolbar חדש -->
-
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#4B15F0"
         android:title="סטטיסטיקות הפסקות"
-        android:titleTextColor="@color/white" />
+        android:titleTextColor="@color/white"/>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"/>
 
     <Button
         android:id="@+id/btnBackBreakStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="חזור"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="חזור" />
+        android:layout_marginBottom="32dp"/>
 
+    <!-- Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        android:elevation="8dp"/>
 </LinearLayout>
