@@ -1,5 +1,3 @@
-
-
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -33,12 +31,16 @@ android {
     }
 }
 
-dependencies {
 
+dependencies {
     implementation(libs.appcompat)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.material)
+
+    // 📊 ספרייה לגרפים
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
