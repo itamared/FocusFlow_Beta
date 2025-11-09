@@ -59,7 +59,6 @@ public class WorkHoursFragment extends Fragment {
 
     private void goToNextStep() {
         // שמירה ל-UserSetupData
-        UserSetupData.occupation = "לימודים/עבודה"; // או לשאול מהבחר המשתמש מקודם
         UserSetupData.startTime = String.format("%02d:%02d", startHour, startMinute);
         UserSetupData.endTime = String.format("%02d:%02d", endHour, endMinute);
 

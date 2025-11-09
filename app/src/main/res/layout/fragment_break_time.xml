@@ -9,22 +9,22 @@
         android:id="@+id/tvInstruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="בחר את השעות לכל ההפסקות"
-        android:textSize="18sp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:text="בחר את השעות לכל ההפסקות"
+        android:textSize="18sp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="522dp"
         android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/breaksContainer"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"/>
+            android:orientation="vertical"
+            android:paddingBottom="16dp" />
     </ScrollView>
 
     <Button

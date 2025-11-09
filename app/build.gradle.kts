@@ -40,6 +40,10 @@ dependencies {
     implementation(libs.material)
 
 
+    implementation("com.google.firebase:firebase-auth:22.1.0")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+
     implementation(platform("com.google.firebase:firebase-bom:32.1.0")) // בדוק גרסה עדכנית
     implementation("com.google.firebase:firebase-auth")    // Authentication
     implementation("com.google.firebase:firebase-firestore") // Firestore DB

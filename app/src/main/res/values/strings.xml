@@ -2,4 +2,7 @@
     <string name="app_name">FocusFlow_Beta</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="default_web_client_id">123031427083-2u6hatdv13k0okiulbr46n2ofuit11si.apps.googleusercontent.com</string>
+
 </resources>

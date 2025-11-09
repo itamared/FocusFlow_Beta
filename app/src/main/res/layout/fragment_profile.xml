@@ -1,42 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:gravity="center_horizontal">
+    android:background="#FAFAFA">
 
-    <!-- כותרת -->
-    <TextView
-        android:id="@+id/tvProfileTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="פרופיל משתמש"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- מידע על המשתמש -->
-    <TextView
-        android:id="@+id/tvProfileInfo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="פרטי משתמש יופיעו כאן"
-        android:gravity="center"
-        android:textSize="16sp"/>
-
-    <!-- כפתור Logout -->
-    <Button
-        android:id="@+id/btnLogout"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="התנתק"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#F44336"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-</LinearLayout>
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <ProgressBar
+            android:id="@+id/progressBarProfile"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- שלום, USERNAME -->
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שלום, משתמש"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="#00796B"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- כרטיס פרטי משתמש -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="#FFFFFF"
+            android:elevation="4dp"
+            android:layout_marginBottom="20dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:backgroundTint="#E0F2F1"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTintMode="src_over">
+
+            <TextView
+                android:id="@+id/tvOccupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="עיסוק: -"
+                android:textSize="18sp"
+                android:padding="12dp"
+                android:textColor="#004D40"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvWorkHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="שעות פעילות: ? - ?"
+                android:textSize="18sp"
+                android:padding="12dp"
+                android:textColor="#004D40"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvBreakCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="מספר הפסקות: 0"
+                android:textSize="18sp"
+                android:padding="12dp"
+                android:textColor="#004D40"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- כפתור Logout -->
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="התנתק"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#D32F2F"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="12dp"/>
+    </LinearLayout>
+</ScrollView>

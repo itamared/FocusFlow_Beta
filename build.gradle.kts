@@ -9,6 +9,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.google.gms:google-services:4.4.0") // או גרסה עדכנית
+        classpath("com.google.gms:google-services:4.4.2") // או גרסה עדכנית
     }
 }

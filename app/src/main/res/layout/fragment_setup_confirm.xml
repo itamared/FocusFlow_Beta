@@ -5,17 +5,24 @@
     android:layout_height="match_parent"
     android:padding="20dp">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:text="TextView" />
+
     <LinearLayout
         android:id="@+id/confirmContainer"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="331dp"
+        android:orientation="vertical" />
 
     <Button
         android:id="@+id/btnFinishSetup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="סיום"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="200dp"
+        android:text="סיום" />
+
 </LinearLayout>

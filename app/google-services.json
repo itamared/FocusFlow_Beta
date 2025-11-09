@@ -12,7 +12,20 @@
           "package_name": "com.example.focusflow_beta"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "123031427083-tbk73o0blg3vabupcafju3no24c5k702.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.focusflow_beta",
+            "certificate_hash": "393da45d29120e5e239b8c01217b0b3803c4c49e"
+          }
+        },
+        {
+          "client_id": "123031427083-2u6hatdv13k0okiulbr46n2ofuit11si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDd046WUQcoTG7nvpvZKvpeCrFJUbGFb7U"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123031427083-2u6hatdv13k0okiulbr46n2ofuit11si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
