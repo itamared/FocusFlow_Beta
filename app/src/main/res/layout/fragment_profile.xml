@@ -8,25 +8,35 @@
     android:gravity="center_horizontal">
 
     <!-- כותרת -->
-
-    <!-- מידע על המשתמש -->
-
     <TextView
         android:id="@+id/tvProfileTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"
         android:text="פרופיל משתמש"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- מידע על המשתמש -->
     <TextView
         android:id="@+id/tvProfileInfo"
-        android:layout_width="348dp"
-        android:layout_height="554dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
         android:text="פרטי משתמש יופיעו כאן"
-        android:textSize="16sp" />
+        android:gravity="center"
+        android:textSize="16sp"/>
+
+    <!-- כפתור Logout -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="התנתק"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#F44336"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 </LinearLayout>

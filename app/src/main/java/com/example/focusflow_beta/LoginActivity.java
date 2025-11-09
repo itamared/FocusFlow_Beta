@@ -36,12 +36,14 @@ public class LoginActivity extends AppCompatActivity {
         prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE);
 
         // בדיקה אם המשתמש כבר מחובר
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            // המשתמש כבר מחובר → מפנים ל-MainActivity עם ה-Fragments
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             return;
         }
+
 
         btnLogin.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();

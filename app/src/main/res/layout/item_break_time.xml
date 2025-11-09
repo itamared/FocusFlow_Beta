@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tvBreakLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="הפסקה X"
+        android:textSize="16sp"
+        android:layout_marginEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/tvBreakStart"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="08:00"
+        android:background="@android:drawable/editbox_background_normal"
+        android:padding="8dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <TextView
+        android:id="@+id/tvBreakEnd"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="08:30"
+        android:background="@android:drawable/editbox_background_normal"
+        android:padding="8dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginStart="8dp"/>
+</LinearLayout>

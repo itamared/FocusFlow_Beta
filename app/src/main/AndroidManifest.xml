@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FocusFlow_Beta">
 
-        <!-- ה־Activity הראשי עכשיו הוא MainActivity שמטפל ב־Fragments -->
-        <activity android:name=".MainActivity"
+        <!-- מסך הבית הראשי -->
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,13 +23,19 @@
             </intent-filter>
         </activity>
 
-        <!-- שאר ה־Activities נשארים זמינים אם נצטרך -->
-        <activity android:name=".oldactivities.ProfileActivity"/>
-        <activity android:name=".oldactivities.BreakStatsActivity"
-            android:parentActivityName=".oldactivities.HomeActivity"/>
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".oldactivities.HomeActivity"/>
-        <activity android:name=".LoginActivity"/>
+        <!-- שאלון ההגדרות הראשוני (לאחר הרשמה) -->
+        <activity
+            android:name=".SetupActivity"
+            android:exported="false" />
+
+        <!-- שאר הפעילויות הישנות -->
+        <activity android:name=".oldactivities.ProfileActivity" />
+        <activity
+            android:name=".oldactivities.BreakStatsActivity"
+            android:parentActivityName=".oldactivities.HomeActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".oldactivities.HomeActivity" />
+        <activity android:name=".LoginActivity" />
 
     </application>
 

@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="כמה הפסקות תרצה במהלך היום?"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <NumberPicker
+        android:id="@+id/numberPickerBreaks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnNextBreaks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="המשך"
+        android:layout_marginTop="32dp"/>
+</LinearLayout>
