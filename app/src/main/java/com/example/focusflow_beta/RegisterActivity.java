@@ -1,14 +1,18 @@
 package com.example.focusflow_beta;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,43 +57,55 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        btnRegister.setEnabled(false);
+
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
-                        String uid = mAuth.getCurrentUser().getUid();
-
-                        // שמירה ב-Collection "users"
-                        Map<String, Object> userData = new HashMap<>();
-                        userData.put("email", email);
-                        userData.put("username", username);
-
-                        db.collection("users").document(uid)
-                                .set(userData)
-                                .addOnFailureListener(e ->
-                                        Toast.makeText(this, "שגיאה בשמירת הנתונים ב-users: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                                );
-
-                        // שמירה ב-Collection חדש "usernames"
-                        Map<String, Object> usernameData = new HashMap<>();
-                        usernameData.put("username", username);
-
-                        db.collection("usernames").document(uid)
-                                .set(usernameData)
-                                .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(this, "הרשמה הושלמה בהצלחה!", Toast.LENGTH_LONG).show();
-                                    // מעבר לשאלון הגדרת המשתמש
-                                    Intent intent = new Intent(RegisterActivity.this, SetupActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    finish();
-                                })
-                                .addOnFailureListener(e ->
-                                        Toast.makeText(this, "שגיאה בשמירת שם המשתמש ב-usernames: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                                );
-
-                    } else {
-                        Toast.makeText(this, "שגיאה בהרשמה: " + (task.getException() != null ? task.getException().getMessage() : "לא ידוע"), Toast.LENGTH_LONG).show();
+                    if (!task.isSuccessful()) {
+                        btnRegister.setEnabled(true);
+                        Toast.makeText(this,
+                                "שגיאה בהרשמה: " + (task.getException() != null ? task.getException().getMessage() : "לא ידוע"),
+                                Toast.LENGTH_LONG).show();
+                        return;
                     }
+
+                    AuthResult result = task.getResult();
+                    FirebaseUser user = (result != null) ? result.getUser() : null;
+
+                    if (user == null) {
+                        btnRegister.setEnabled(true);
+                        Toast.makeText(this, "שגיאה: המשתמש לא נוצר (user=null)", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    String uid = user.getUid();
+
+                    // 1) users/{uid}
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put("email", email);
+                    userData.put("username", username);
+
+                    // 2) usernames/{uid}
+                    Map<String, Object> usernameData = new HashMap<>();
+                    usernameData.put("username", username);
+
+                    // כתיבה אחת שמבצעת את שתי השמירות יחד
+                    WriteBatch batch = db.batch();
+                    batch.set(db.collection("users").document(uid), userData);
+                    batch.set(db.collection("usernames").document(uid), usernameData);
+
+                    batch.commit()
+                            .addOnSuccessListener(unused -> {
+                                Toast.makeText(this, "הרשמה הושלמה בהצלחה!", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(RegisterActivity.this, SetupActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                btnRegister.setEnabled(true);
+                                Toast.makeText(this, "שגיאה בשמירת הנתונים ב-Firestore: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            });
                 });
     }
 }

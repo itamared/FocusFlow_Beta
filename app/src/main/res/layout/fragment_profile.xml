@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"/>
 
-        <!-- שלום, USERNAME -->
         <TextView
             android:id="@+id/tvGreeting"
             android:layout_width="wrap_content"
@@ -31,7 +30,6 @@
             android:gravity="center"
             android:layout_marginBottom="32dp"/>
 
-        <!-- כרטיס פרטי משתמש -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -78,13 +76,26 @@
                 android:gravity="center"/>
         </LinearLayout>
 
+        <!-- כפתור הגדרות -->
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="הגדרות"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#00796B"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="12dp"/>
+
         <!-- כפתור Logout -->
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="התנתק"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:backgroundTint="#D32F2F"
             android:textColor="#FFFFFF"
             android:textSize="18sp"

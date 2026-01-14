@@ -7,13 +7,11 @@ import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.focusflow_beta.oldactivities.HomeActivity;
 import com.google.android.gms.auth.api.signin.*;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -26,9 +24,11 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton btnGoogleSignIn;
     private TextView tvMessage, tvRegister;
     private CheckBox cbRememberMe;
+
     private SharedPreferences prefs;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1001;
 
@@ -49,14 +49,19 @@ public class LoginActivity extends AppCompatActivity {
         cbRememberMe = findViewById(R.id.cbRememberMe);
         btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
 
-        // בדיקה אם המשתמש כבר מחובר
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-            return;
-        }
-
         setupGoogleSignIn();
+
+        // Auto-login רק אם rememberMe=true
+        boolean remember = prefs.getBoolean("rememberMe", false);
+        if (mAuth.getCurrentUser() != null) {
+            if (remember) {
+                routeUserAfterLogin(mAuth.getCurrentUser());
+                return;
+            } else {
+                // לא בחר "זכור אותי" → לא מאפשרים Auto-login
+                hardSignOut();
+            }
+        }
 
         btnLogin.setOnClickListener(v -> loginWithEmail());
         btnGoogleSignIn.setOnClickListener(v -> signInWithGoogle());
@@ -75,20 +80,22 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        if (cbRememberMe.isChecked()) {
-                            prefs.edit().putBoolean("rememberMe", true).apply();
-                        }
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+
+                        // ✅ תמיד שומרים את הבחירה (true/false)
+                        prefs.edit().putBoolean("rememberMe", cbRememberMe.isChecked()).apply();
+
+                        routeUserAfterLogin(mAuth.getCurrentUser());
                     } else {
-                        showMessage("שגיאה: " + (task.getException() != null ? task.getException().getMessage() : "לא ידוע"), false);
+                        showMessage("שגיאה: " +
+                                        (task.getException() != null ? task.getException().getMessage() : "לא ידוע"),
+                                false);
                     }
                 });
     }
 
     private void setupGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // ודא שיש לך את המזהה הנכון ב-res/values/strings.xml
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -119,9 +126,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+
+                        // ✅ תמיד שומרים את הבחירה (true/false)
+                        prefs.edit().putBoolean("rememberMe", cbRememberMe.isChecked()).apply();
+
                         handleGoogleUser(mAuth.getCurrentUser(), account);
                     } else {
                         showMessage("Authentication Failed.", false);
@@ -131,13 +143,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleGoogleUser(FirebaseUser firebaseUser, GoogleSignInAccount account) {
         if (firebaseUser == null) return;
+
         String uid = firebaseUser.getUid();
         String email = firebaseUser.getEmail();
-        String displayName = account.getDisplayName();
+        String displayName = (account != null) ? account.getDisplayName() : null;
 
-        db.collection("users").document(uid).get().addOnSuccessListener(documentSnapshot -> {
-            if (!documentSnapshot.exists()) {
-                // משתמש חדש → צור שם משתמש אוטומטי
+        db.collection("users").document(uid).get().addOnSuccessListener(doc -> {
+
+            // משתמש חדש לגמרי
+            if (!doc.exists()) {
                 String username = generateUsername(displayName, email);
 
                 Map<String, Object> userData = new HashMap<>();
@@ -152,30 +166,77 @@ public class LoginActivity extends AppCompatActivity {
 
                 startActivity(new Intent(LoginActivity.this, SetupActivity.class));
                 finish();
-            } else {
-                Boolean setupCompleted = documentSnapshot.getBoolean("setupCompleted");
-                if (setupCompleted != null && setupCompleted) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                } else {
-                    startActivity(new Intent(LoginActivity.this, SetupActivity.class));
-                }
-                finish();
+                return;
             }
-        });
+
+            // משתמש קיים -> ננתב לפי נתונים
+            routeUserAfterLogin(firebaseUser);
+
+        }).addOnFailureListener(e -> showMessage("שגיאה בקריאת משתמש: " + e.getMessage(), false));
+    }
+
+    private void routeUserAfterLogin(FirebaseUser user) {
+        if (user == null) return;
+
+        String uid = user.getUid();
+
+        db.collection("users").document(uid).get().addOnSuccessListener(doc -> {
+
+            if (!doc.exists()) {
+                startActivity(new Intent(LoginActivity.this, SetupActivity.class));
+                finish();
+                return;
+            }
+
+            String occupation = doc.getString("occupation");
+            String startTime = doc.getString("startTime");
+            String endTime = doc.getString("endTime");
+            Object breakTimesObj = doc.get("breakTimes");
+
+            boolean hasBreakTimes =
+                    breakTimesObj instanceof java.util.List &&
+                            !((java.util.List<?>) breakTimesObj).isEmpty();
+
+            boolean hasSetupData =
+                    occupation != null && !occupation.trim().isEmpty() &&
+                            startTime != null && !startTime.trim().isEmpty() &&
+                            endTime != null && !endTime.trim().isEmpty() &&
+                            hasBreakTimes;
+
+            if (hasSetupData) {
+                db.collection("users").document(uid).update("setupCompleted", true);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            } else {
+                startActivity(new Intent(LoginActivity.this, SetupActivity.class));
+            }
+
+            finish();
+        }).addOnFailureListener(e -> showMessage("שגיאה בטעינת נתוני משתמש: " + e.getMessage(), false));
+    }
+
+    private void hardSignOut() {
+        try { mAuth.signOut(); } catch (Exception ignored) {}
+        try {
+            GoogleSignIn.getClient(this,
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+            ).signOut();
+        } catch (Exception ignored) {}
     }
 
     private String generateUsername(String displayName, String email) {
         if (displayName != null && !displayName.isEmpty()) {
-            return displayName.replaceAll("\\s+", "").toLowerCase() + (int)(Math.random()*1000);
+            return displayName.replaceAll("\\s+", "").toLowerCase() + (int) (Math.random() * 1000);
         } else if (email != null && !email.isEmpty()) {
-            return email.split("@")[0] + (int)(Math.random()*1000);
+            return email.split("@")[0] + (int) (Math.random() * 1000);
         } else {
-            return "user" + (int)(Math.random()*10000);
+            return "user" + (int) (Math.random() * 10000);
         }
     }
 
     private void showMessage(String msg, boolean success) {
         tvMessage.setText(msg);
-        tvMessage.setTextColor(getResources().getColor(success ? android.R.color.holo_green_dark : android.R.color.holo_red_dark));
+        tvMessage.setTextColor(getResources().getColor(
+                success ? android.R.color.holo_green_dark : android.R.color.holo_red_dark
+        ));
     }
 }

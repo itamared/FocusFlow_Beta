@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="18dp"
+    android:background="#FAFAFA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הגדרות"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="#004D40"/>
+
+        <!-- Occupation as spinner only -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="עיסוק"
+            android:textStyle="bold"
+            android:textColor="#004D40"
+            android:layout_marginTop="14dp"/>
+
+        <Spinner
+            android:id="@+id/spOccupation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"/>
+
+        <EditText
+            android:id="@+id/etWorkStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שעת התחלה (HH:mm) למשל 08:00"
+            android:layout_marginTop="12dp"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/etWorkEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שעת סיום (HH:mm) למשל 16:00"
+            android:layout_marginTop="10dp"
+            android:inputType="text"/>
+
+        <!-- Break count as spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="מספר הפסקות"
+            android:textStyle="bold"
+            android:textColor="#004D40"
+            android:layout_marginTop="14dp"/>
+
+        <Spinner
+            android:id="@+id/spBreakCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הפסקות (Start / End)"
+            android:textStyle="bold"
+            android:textColor="#004D40"
+            android:layout_marginTop="16dp"/>
+
+        <LinearLayout
+            android:id="@+id/breaksContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnSaveSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="שמור"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00796B"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</ScrollView>

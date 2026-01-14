@@ -67,10 +67,14 @@ public class SetupConfirmFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        // מזהה המשתמש (אם אין auth, ניצור ID אוטומטי)
-        String userId = (auth.getCurrentUser() != null)
-                ? auth.getCurrentUser().getUid()
-                : db.collection("users").document().getId();
+        if (auth.getCurrentUser() == null) {
+            Toast.makeText(getContext(), "אתה לא מחובר. תתחבר מחדש.", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(requireActivity(), LoginActivity.class));
+            requireActivity().finish();
+            return;
+        }
+        String userId = auth.getCurrentUser().getUid();
+
 
         // בניית הנתונים
         Map<String, Object> userData = new HashMap<>();

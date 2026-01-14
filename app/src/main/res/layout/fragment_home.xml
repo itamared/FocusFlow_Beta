@@ -1,51 +1,74 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:padding="18dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="מוכן להתחלה"
-            android:textSize="20sp"
+            android:text="מוכן"
             android:textStyle="bold"
-            android:layout_marginTop="30dp"/>
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tvWindow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הפסקה: --:-- - --:--"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tvNextBreak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הפסקה הבאה: -"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tvTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="25:00"
-            android:textSize="72sp"
+            android:text="--:--"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"/>
+            android:textSize="64sp"
+            android:layout_marginTop="18dp"/>
+
+        <TextView
+            android:id="@+id/tvSpare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ספייר: 00:00"
+            android:layout_marginTop="10dp"
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/btnStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="התחל"
-            android:layout_marginTop="50dp"/>
+            android:text="התחל טיימר הפסקה"
+            android:layout_marginTop="16dp"/>
 
         <Button
-            android:id="@+id/btnPause"
+            android:id="@+id/btnAddSpare"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="השהה"
-            android:layout_marginTop="16dp"/>
+            android:text="הוסף ספייר להפסקה הבאה"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/btnReset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="אפס"
-            android:layout_marginTop="16dp"/>
+            android:text="איפוס"
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
 </ScrollView>
